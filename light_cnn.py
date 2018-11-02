@@ -178,3 +178,14 @@ def LightCNN_29Layers(**kwargs):
 def LightCNN_29Layers_v2(**kwargs):
     model = network_29layers_v2(resblock, [1, 2, 3, 4], **kwargs)
     return model
+
+if __name__ == '__main__':
+    model = LightCNN_29Layers_v2(num_classes=1)
+
+    x = torch.rand(1, 1, 128, 128)
+    model = torch.nn.DataParallel(model).cuda()
+    for i in range(10):
+        start = time.time()
+        y = model(x)
+        end = time.time()
+        print(end - start)
